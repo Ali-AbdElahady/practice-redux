@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 const cartSlice = createSlice({
   name: "cart",
   initialState: { items: [], totalAmount: 0 },
@@ -15,13 +14,16 @@ const cartSlice = createSlice({
           price: newItem.price,
           quantity: 1,
           totalPrice: newItem.price,
-          name: newItem.title,
+          name: newItem.name,
         });
-    } else {
+        console.log(newItem);
+      } else {
         existingItem.quantity++;
         existingItem.totalPrice = existingItem.totalPrice + newItem.price;
-    }
-    state.totalAmount++
+      }
+      state.totalAmount++;
+
+       
     },
     removeItemfromCart(state, action) {
       const id = action.payload;
@@ -41,7 +43,13 @@ const cartSlice = createSlice({
         state.items = state.items.filter((item) =>{console.log("object");return item.itemId !== id;});
     }
     state.totalAmount--
+
     },
+    repalceItemInCart(state,action){
+      const cart = action.payload;
+      state.items = cart.items;
+      state.totalAmount = cart.totalQuantity
+    }
   },
   }
 );
